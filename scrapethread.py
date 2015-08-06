@@ -1,13 +1,15 @@
 #!/usr/bin/env python2
 
 import requests
+import argparse
 
 def main():
 	#TODO: argument for thread url (regex cap)
 	#TODO: argument for saving as original filename (can't wget -i, possible duplicate names)
 	#TODO: test youtube embeds, flash vids, pdfs, webms, ...
-	board = "b"
-	thread_num = "2314462"
+	#TODO: thread watching
+
+	board, thread_num = get_args()
 	thread_api_url = "http://8ch.net/{0}/res/{1}.json".format(board, thread_num)
 	thread = requests.get(thread_api_url).json()
 	
@@ -37,6 +39,14 @@ def main():
 	for img in images:
 		final_url = "http://8ch.net/{0}/src/{1}".format(board, img["url"])
 		print(final_url)
+
+def get_args():
+	parser = argparse.ArgumentParser(description='Download some 8ch images.')
+	parser.add_argument("board", help="the board (e.g. b)", )
+	parser.add_argument("thread_num", help="the post number of the thread (e.g. 2314462)")
+	args = parser.parse_args()
+	return (args.board, args.thread_num)
+
 
 if __name__ == "__main__":
 	main()
