@@ -1,3 +1,12 @@
 # 8ch-pull
 
-This program doesn't do any downloading. It prints a list of URLs. You're meant to pipe the output of this program into `wget -Ni -`.
+    usage: scrapethread.py [-h] board thread_num
+    
+    Download some 8ch images.
+    
+    positional arguments:
+      board       the board (e.g. b)
+      thread_num  the post number of the thread (e.g. 2314462)
+    
+    optional arguments:
+      -h, --help  show this help message and exit

@@ -2,6 +2,7 @@
 
 import requests
 import argparse
+import os.path
 
 def main():
 	#TODO: argument for thread url (regex cap)
@@ -38,7 +39,23 @@ def main():
 	#print out all images found
 	for img in images:
 		final_url = "http://8ch.net/{0}/src/{1}".format(board, img["url"])
-		print(final_url)
+		download_image(final_url)
+
+def download_image(url):
+	print(url)
+	local_fname = url.split('/')[-1]
+	r = requests.get(url, stream=True)
+
+	if (os.path.isfile(local_fname)):
+		print("file exists, skipping")
+		return
+
+	with open(local_fname, "wb") as f:
+		for chunk in r.iter_content(chunk_size=1024):
+			if chunk:
+				f.write(chunk)
+				f.flush()
+	return local_fname
 
 def get_args():
 	parser = argparse.ArgumentParser(description='Download some 8ch images.')
