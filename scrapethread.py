@@ -48,12 +48,12 @@ def download_image(url):
 		print("file " + url + " exists, skipping")
 		return local_fname
 
-        print("Getting file " + url)
+	print("Getting file " + url)
 	r = requests.get(url, stream=True)
 	with open(local_fname, "wb") as f:
 		for chunk in r.iter_content(chunk_size=1024):
 			if chunk:
-			        f.write(chunk)
+				f.write(chunk)
 	return local_fname
 
 def get_args():
