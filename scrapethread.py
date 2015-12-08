@@ -42,19 +42,18 @@ def main():
 		download_image(final_url)
 
 def download_image(url):
-	print(url)
 	local_fname = url.split('/')[-1]
-	r = requests.get(url, stream=True)
 
 	if (os.path.isfile(local_fname)):
-		print("file exists, skipping")
-		return
+		print("file " + url + " exists, skipping")
+		return local_fname
 
+        print("Getting file " + url)
+	r = requests.get(url, stream=True)
 	with open(local_fname, "wb") as f:
 		for chunk in r.iter_content(chunk_size=1024):
 			if chunk:
-				f.write(chunk)
-				f.flush()
+			        f.write(chunk)
 	return local_fname
 
 def get_args():
